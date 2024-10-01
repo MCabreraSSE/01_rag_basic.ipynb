@@ -1,0 +1,8 @@
+---- Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type
+aws ec2 run-instances --image-id ami-098e42ae54c764c35 --instance-type t2.micro --security-group-ids sg-04cab45a866be1b12 --tag-specifications ResourceType=instance,Tags=[{Key=Enviromment,Value=Forensics},{Key=Jobs,Value=Infosec}] --key-name oregon --user-data file://userscripts.sh --region us-west-2
+
+# Lista instancias en estado running
+aws ec2 describe-instances --query "Reservations[*].Instances[*].{PublicIP:PublicIpAddress,PublicDNS:PublicDnsName,Name:Tags[?Key=='Name']|[0].Value,Status:State.Name,Instance:InstanceId}"  --filters "Name=instance-state-name,Values=running"  --output table --region us-west-2
+
+# Lista instancias en estado running
+aws ec2 describe-instances --instance-ids i-0291bef507ad91c00 --region us-west-2 --output table
